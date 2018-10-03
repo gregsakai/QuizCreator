@@ -41,19 +41,19 @@ function Model() {
     questionDisplay.style.display = "none";
 
     if (quiz) {
-      for (let l = 0; l < quiz.length; l++) {
+      for (let i = 0; i < quiz.length; i++) {
         const newQuestion = questionDisplay.cloneNode(true);
         newQuestion.style.display = "block";
         document.getElementById("cont").appendChild(newQuestion);
         newQuestion.querySelector('[id="questionText"]').innerHTML =
-          quiz[l].question;
+          quiz[i].question;
 
         const newRadios = newQuestion.querySelectorAll('[type="radio"]');
 
-        for (let k = 0; k < 4; k++) {
+        for (let j = 0; j < 4; j++) {
           let labelArray = newQuestion.querySelectorAll('[class="qlabel"]');
-          labelArray[k].innerHTML = quiz[l].answers[k].answer;
-          newRadios[k].name = `answer${l + 1}`;
+          labelArray[j].innerHTML = quiz[i].answers[j].answer;
+          newRadios[j].name = `answer${i + 1}`;
         }
       }
     } else {

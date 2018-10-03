@@ -1,5 +1,5 @@
-function View(controller) {
-  this.controller = controller;
+function View(model) {
+  this.model = model;
 
   // DOM Manipulation is handled inside the View
   // The View is the only part which changes the DOM
@@ -22,10 +22,10 @@ function View(controller) {
     const newRadios = addedQuestion.querySelectorAll('[type="radio"]');
     newRadios[0].checked = true;
 
-    for (let x = 0; x < 4; x++) {
-      newInputs[x].value = "";
-      newInputs[x].className = `my-1 pl-1 qinput${num}`;
-      newRadios[x].name = `answer${num}`;
+    for (let i = 0; i < 4; i++) {
+      newInputs[i].value = "";
+      newInputs[i].className = `my-1 pl-1 qinput${num}`;
+      newRadios[i].name = `answer${num}`;
     }
   };
 
@@ -42,17 +42,17 @@ function View(controller) {
     );
     let totalCorrectAnswers = 0;
 
-    for (let n = 1; n <= quiz.length; n++) {
-      let chosenAnswer = document.querySelectorAll('[name="answer' + n + '"]');
+    for (let i = 1; i <= quiz.length; i++) {
+      let chosenAnswer = document.querySelectorAll('[name="answer' + i + '"]');
 
-      for (let m = 0; m < 4; m++) {
-        if (chosenAnswer[m].checked && quiz[n - 1].answers[m].correct) {
+      for (let j = 0; j < 4; j++) {
+        if (chosenAnswer[j].checked && quiz[i - 1].answers[j].correct) {
           totalCorrectAnswers++;
         } else {
-          if (quiz[n - 1].answers[m].correct) {
-            let correctAnswer = correctAnswerIndicator[n].querySelectorAll(
+          if (quiz[i - 1].answers[j].correct) {
+            let correctAnswer = correctAnswerIndicator[i].querySelectorAll(
               '[class="qlabel"]'
-            )[m];
+            )[j];
             correctAnswer.style.color = "red";
           }
         }
@@ -63,18 +63,4 @@ function View(controller) {
       quiz.length
     }`;
   };
-
-  // The Controller will determine where the event is coming from,
-  // and fire off the correct function based on the type of event
-  this.saveButton = document.getElementById("saveButton");
-  this.saveButton.addEventListener("click", controller);
-
-  this.addButton = document.getElementById("addButton");
-  this.addButton.addEventListener("click", this.addQuestion);
-
-  this.deleteButton = document.getElementById("deleteButton");
-  this.deleteButton.addEventListener("click", this.deleteQuestion);
-
-  this.submitButton = document.getElementById("submitButton");
-  this.submitButton.addEventListener("click", this.submitQuiz);
 }
