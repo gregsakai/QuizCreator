@@ -4,13 +4,14 @@ function View(model) {
   // DOM Manipulation is handled inside the View
   // The View is the only part which changes the DOM
 
+  this.cont = document.getElementById("cont");
+  const questionForm = document.getElementById("questionForm");
+
   // Creates another form in the DOM to create another question
   this.addQuestion = function() {
-    const cont = document.getElementById("cont");
-    const questionForm = document.getElementById("questionForm");
-    let num = cont.childNodes.length - 1;
+    let num = this.cont.childNodes.length - 1;
     const addedQuestion = questionForm.cloneNode(true);
-    cont.appendChild(addedQuestion);
+    this.cont.appendChild(addedQuestion);
 
     addedQuestion.querySelector(
       '[id="questionNumber"]'
@@ -30,14 +31,21 @@ function View(model) {
   };
 
   // Deletes the question from the DOM
-  this.deleteQuestion = function() {
-    cont.removeChild(this.parentNode.parentNode);
+  this.deleteQuestion = function(target) {
+    this.cont.removeChild(target.parentNode.parentNode);
+    let headings = document.querySelectorAll('[id="questionNumber"]');
+    // this loop updates the question number
+    // example: add Question 2, then delete Question 1,
+    // the second question will then become "Question 1"
+    for (let i = 1; i <= this.cont.childElementCount; i++) {
+      headings[i - 1].innerText = `Question ${i}`;
+    }
   };
 
   // Evaluates the quiz and displays the results on the DOM
   this.submitQuiz = function() {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
-    const correctAnswerIndicator = cont.querySelectorAll(
+    const correctAnswerIndicator = this.cont.querySelectorAll(
       '[id="questionDisplay"]'
     );
     let totalCorrectAnswers = 0;

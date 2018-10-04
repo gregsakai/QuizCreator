@@ -17,8 +17,15 @@ function Controller(model, view) {
     this.saveButton = document.getElementById("saveButton");
     this.saveButton.addEventListener("click", this);
 
-    this.deleteButton = document.getElementById("deleteButton");
-    this.deleteButton.addEventListener("click", this);
+    // Event bubbling is required, in order to prevent a specific edge case:
+    // If all questions are deleted, there will be no elements with the ID,
+    // and the event listener will not be applied when a new question is added
+    document.addEventListener("click", e => {
+      if (e.target.classList.contains("deleteButton")) {
+        this.deleteButton = e.target;
+        this.deleteButton.addEventListener("click", this.handleEvent(e));
+      }
+    });
 
     this.addButton = document.getElementById("addButton");
     this.addButton.addEventListener("click", this);
@@ -45,17 +52,18 @@ function Controller(model, view) {
   this.clickHandler = function(target) {
     switch (target) {
       // These are different elements which may be clicked
-      case addButton:
+      case this.addButton:
         this.view.addQuestion();
         break;
-      case deleteButton:
-        this.view.deleteQuestion();
+      case this.deleteButton:
+        this.view.deleteQuestion(target);
         break;
-      case saveButton:
+      case this.saveButton:
         this.model.storeQuiz();
         break;
-      case submitQuiz:
+      case this.submitButton:
         this.view.submitQuiz();
+        break;
       default:
         console.log(target);
     }
