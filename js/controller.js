@@ -10,6 +10,7 @@ function Controller(model, view) {
 
   // EVENT TRIGGERING
   if (route === "/user.html") {
+    // when the pages loads, attempt to fetch the quiz
     window.addEventListener("load", this);
     this.submitButton = document.getElementById("submitButton");
     this.submitButton.addEventListener("click", this);

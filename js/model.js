@@ -10,12 +10,14 @@ function Model() {
       i < document.getElementById("cont").childElementCount;
       i++
     ) {
+      // answers is an array of objects with properties for the
+      // answer (string) and correct answer (boolean)
       questionData.push({ question: "", answers: [] });
       const radioArray = document.querySelectorAll(
         '[name="answer' + (i + 1) + '"]'
       );
       const inputArray = document.querySelectorAll(
-        '[class="my-1 pl-1 qinput' + (i + 1) + '"]'
+        '[class="qinput' + (i + 1) + '"]'
       );
       for (let j = 0; j < 4; j++) {
         let answer = inputArray[j].value;
@@ -41,6 +43,7 @@ function Model() {
     questionDisplay.style.display = "none";
 
     if (quiz) {
+      // updates values of the DOM element with properties from the object
       for (let i = 0; i < quiz.length; i++) {
         const newQuestion = questionDisplay.cloneNode(true);
         newQuestion.style.display = "block";
