@@ -7,18 +7,19 @@ function Model() {
 
     for (
       let i = 0;
-      i < document.getElementById("cont").childElementCount;
+      i < document.querySelectorAll('[id="questionForm"]').length;
       i++
     ) {
       // answers is an array of objects with properties for the
       // answer (string) and correct answer (boolean)
       questionData.push({ question: "", answers: [] });
-      const radioArray = document.querySelectorAll(
+      let radioArray = document.querySelectorAll(
         '[name="answer' + (i + 1) + '"]'
       );
-      const inputArray = document.querySelectorAll(
+      let inputArray = document.querySelectorAll(
         '[class="qinput' + (i + 1) + '"]'
       );
+      console.log(inputArray);
       for (let j = 0; j < 4; j++) {
         let answer = inputArray[j].value;
         let correct = radioArray[j].checked;

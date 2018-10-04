@@ -34,7 +34,6 @@ function Controller(model, view) {
 
   // EVENT HANDLING
   this.handleEvent = function(e) {
-    e.stopPropagation();
     switch (e.type) {
       // These are the different types of events which may be called
       // This makes it easy to add event types in the future

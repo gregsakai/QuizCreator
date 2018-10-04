@@ -7,11 +7,12 @@ function View(model) {
   const cont = document.getElementById("cont");
   const questionForm = document.getElementById("questionForm");
 
+  let num = 1;
+
   // Creates another form in the DOM to create another question
   this.addQuestion = function() {
-    let num = cont.childNodes.length - 1;
+    ++num;
     const addedQuestion = questionForm.cloneNode(true);
-
     // updates the heading displaying the Question Number
     addedQuestion.querySelector(
       '[id="questionNumber"]'
@@ -28,7 +29,6 @@ function View(model) {
       newInputs[i].value = "";
       newInputs[i].className = `qinput${num}`;
       newRadios[i].name = `answer${num}`;
-      newRadios[i].checked = false;
     }
 
     cont.appendChild(addedQuestion);
@@ -36,13 +36,20 @@ function View(model) {
 
   // Deletes the question from the DOM
   this.deleteQuestion = function(target) {
+    --num;
     cont.removeChild(target.parentNode.parentNode);
     let headings = document.querySelectorAll('[id="questionNumber"]');
+    let inputs = document.querySelectorAll('[type="text"]');
+    let radios = document.querySelectorAll('[type="radio"]');
     // this loop updates the question number
     // example: add Question 2, then delete Question 1,
     // the second question will then become "Question 1"
     for (let i = 1; i <= cont.childElementCount; i++) {
       headings[i - 1].innerText = `Question ${i}`;
+      for (let j = 0; j < 4; j++) {
+        inputs[j].className = `qinput${i}`;
+        radios[j].name = `answer${i}`;
+      }
     }
   };
 
@@ -68,6 +75,7 @@ function View(model) {
             )[j];
             correctAnswer.style.color = "red";
           }
+          continue;
         }
       }
     }
