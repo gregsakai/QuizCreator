@@ -4,36 +4,39 @@ function Model() {
   // Store the JSON Object into LocalStorage
   this.storeQuiz = function() {
     const questionData = [];
+    let numQuestions = document.querySelectorAll('[id="questionForm"]').length;
 
-    for (
-      let i = 0;
-      i < document.querySelectorAll('[id="questionForm"]').length;
-      i++
-    ) {
-      // answers is an array of objects with properties for the
-      // answer (string) and correct answer (boolean)
-      questionData.push({ question: "", answers: [] });
-      let radioArray = document.querySelectorAll(
-        '[name="answer' + (i + 1) + '"]'
-      );
-      let inputArray = document.querySelectorAll(
-        '[class="qinput' + (i + 1) + '"]'
-      );
-      console.log(inputArray);
-      for (let j = 0; j < 4; j++) {
-        let answer = inputArray[j].value;
-        let correct = radioArray[j].checked;
-        questionData[i].answers.push({ answer, correct });
+    if (numQuestions) {
+      for (let i = 0; i < numQuestions; i++) {
+        // answers is an array of objects with properties for the
+        // answer (string) and correct answer (boolean)
+        questionData.push({ question: "", answers: [] });
+        let radioArray = document.querySelectorAll(
+          '[name="answer' + (i + 1) + '"]'
+        );
+        let inputArray = document.querySelectorAll(
+          '[class="qinput' + (i + 1) + '"]'
+        );
+        console.log(inputArray);
+        for (let j = 0; j < 4; j++) {
+          let answer = inputArray[j].value;
+          let correct = radioArray[j].checked;
+          questionData[i].answers.push({ answer, correct });
+        }
+
+        const currentTextField = document.querySelectorAll(
+          '[name="editQuestion"]'
+        );
+        questionData[i].question = currentTextField[i].value;
       }
 
-      const currentTextField = document.querySelectorAll(
-        '[name="editQuestion"]'
-      );
-      questionData[i].question = currentTextField[i].value;
+      localStorage.setItem("quiz", JSON.stringify(questionData));
+      console.log(questionData);
+    } else {
+      $("#centerModal").modal("show");
+      $("#exampleModalLongTitle").html("Error!");
+      $("#modal-body").html("Your quiz must have at least one question!");
     }
-
-    localStorage.setItem("quiz", JSON.stringify(questionData));
-    console.log(questionData);
   };
 
   // Retrieves the quiz data and populates the DOM
