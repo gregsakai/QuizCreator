@@ -32,6 +32,7 @@ function View(model) {
     }
 
     cont.appendChild(addedQuestion);
+    newRadios[0].checked = true;
   };
 
   // Deletes the question from the DOM
