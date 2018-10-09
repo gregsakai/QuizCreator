@@ -6,7 +6,26 @@ function Model() {
     const questionData = [];
     let numQuestions = document.querySelectorAll('[id="questionForm"]').length;
 
-    if (numQuestions) {
+    let questionTextFields = document.querySelectorAll('[name="editQuestion"]');
+    for (let question of questionTextFields) {
+      if (!question.value) question.style.borderColor = "red";
+      else question.style.borderColor = "initial";
+    }
+
+    let answerOptions = document.querySelectorAll('[type="text"]');
+    for (let answer of answerOptions) {
+      if (!answer.value) answer.style.borderColor = "red";
+      else answer.style.borderColor = "initial";
+    }
+
+    // Checks every text input to make sure it has a value
+    let allTextInputs = document.querySelectorAll('[type="text"]');
+    let textInputToArray = Object.keys(allTextInputs).map(
+      textInput => allTextInputs[textInput]
+    );
+    let checkVals = textInputToArray.every(current => current.value);
+
+    function storeQuizIfValid() {
       for (let i = 0; i < numQuestions; i++) {
         // answers is an array of objects with properties for the
         // answer (string) and correct answer (boolean)
@@ -17,7 +36,6 @@ function Model() {
         let inputArray = document.querySelectorAll(
           '[class="qinput' + (i + 1) + '"]'
         );
-        console.log(inputArray);
         for (let j = 0; j < 4; j++) {
           let answer = inputArray[j].value;
           let correct = radioArray[j].checked;
@@ -31,11 +49,25 @@ function Model() {
       }
 
       localStorage.setItem("quiz", JSON.stringify(questionData));
-      console.log(questionData);
+    }
+
+    if (numQuestions && checkVals) {
+      storeQuizIfValid();
+      const quiz = JSON.parse(localStorage.getItem("quiz"));
+      console.log(quiz);
+      if (quiz) {
+        $("#centerModal").modal("show");
+        $("#exampleModalLongTitle").html("Success!");
+        $("#modal-body").html("Quiz saved successfully!");
+      } else {
+        $("#centerModal").modal("show");
+        $("#exampleModalLongTitle").html("Error!");
+        $("#modal-body").html("Something went wrong. Your quiz was not saved.");
+      }
     } else {
       $("#centerModal").modal("show");
       $("#exampleModalLongTitle").html("Error!");
-      $("#modal-body").html("Your quiz must have at least one question!");
+      $("#modal-body").html("Your quiz is incomplete.");
     }
   };
 
