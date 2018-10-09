@@ -73,6 +73,15 @@ function Model() {
 
   // Retrieves the quiz data and populates the DOM
   this.retrieveQuiz = function() {
+    let route = window.location.pathname;
+    if (route === "/user.html") {
+      this.retrieveQuizForUser();
+    } else if (route === "/admin.html") {
+      this.retrieveQuizForAdmin();
+    }
+  };
+
+  this.retrieveQuizForUser = function() {
     const quiz = JSON.parse(localStorage.getItem("quiz"));
     console.log(quiz);
     const questionDisplay = document.getElementById("questionDisplay");
@@ -101,6 +110,41 @@ function Model() {
       link.innerHTML = "Click here to create one";
       link.setAttribute("href", "admin.html");
       document.body.appendChild(link);
+    }
+  };
+
+  this.retrieveQuizForAdmin = function() {
+    const quiz = JSON.parse(localStorage.getItem("quiz"));
+    console.log(quiz);
+    const cont = document.getElementById("cont");
+    let questionForm = document.getElementById("questionForm");
+
+    if (quiz) {
+      // updates values of the DOM element with properties from the object
+      for (let i = 0; i < quiz.length; i++) {
+        // let firstQ = document.getElementById("questionForm");
+        // if (quiz.length > 1) {
+        //   let currentQuestion = firstQ.cloneNode(true);
+        //   cont.appendChild(currentQuestion);
+        // }
+        let currentQuestion = questionForm.cloneNode(true);
+        cont.appendChild(currentQuestion);
+
+        currentQuestion.querySelector('[name="editQuestion"]').value =
+          quiz[i].question;
+        currentQuestion.querySelector(
+          '[id="questionNumber"]'
+        ).innerHTML = `Question ${i + 1}`;
+
+        let radioArray = currentQuestion.querySelectorAll('[type="radio"]');
+        let labelArray = currentQuestion.querySelectorAll('[type="text"]');
+
+        for (let j = 0; j < 4; j++) {
+          labelArray[j].value = quiz[i].answers[j].answer;
+          radioArray[j].name = `answer${i + 1}`;
+          radioArray[j].checked = quiz[i].answers[j].correct || false;
+        }
+      }
     }
   };
 }

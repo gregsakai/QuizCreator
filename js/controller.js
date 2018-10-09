@@ -7,11 +7,11 @@ function Controller(model, view) {
   // such as the controller methods below
 
   let route = window.location.pathname;
+  // when the pages loads, attempt to fetch the quiz
+  window.addEventListener("load", this);
 
   // EVENT TRIGGERING
   if (route === "/user.html") {
-    // when the pages loads, attempt to fetch the quiz
-    window.addEventListener("load", this);
     this.submitButton = document.getElementById("submitButton");
     this.submitButton.addEventListener("click", this);
   } else if ((route = "/admin.html")) {
