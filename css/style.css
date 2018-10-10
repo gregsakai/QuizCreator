@@ -1,9 +1,0 @@
-input {
-  margin: 5px auto;
-}
-
-#textFieldErr,
-#answerFieldErr {
-  display: none;
-  color: red;
-}
