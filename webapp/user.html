@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <title>User Page</title>
+</head>
+
+<body>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-row mb-3">
+            <a href="admin.html" class="btn btn-secondary m-3">
+                Admin Page
+            </a>
+            <a href="#" class="btn btn-dark m-3">
+                User Page
+            </a>
+        </div>
+        <div id="container" class="container d-flex flex-column align-items-center"></div>
+        <button id="submitButton" class="btn btn-primary my-2" data-toggle="modal" data-target="#centerModal">
+            Submit
+        </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="centerModal" tabindex="-1" role="dialog" aria-labelledby="centerModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Quiz Results</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/model.js"></script>
+    <script src="./js/view.js"></script>
+    <script src="./js/controller.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
