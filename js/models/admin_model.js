@@ -48,11 +48,13 @@ function Model() {
           radioArray[j].name = `radio${i + 1}`;
           radioArray[j].checked = quiz[i].answers[j].correct;
         }
+        container.innerHTML = null;
         container.appendChild(currentQuestion);
       }
     } else {
       let currentQuestion = document.createElement("div");
       currentQuestion.innerHTML = questionForm;
+      container.innerHTML = null;
       container.appendChild(currentQuestion);
     }
   };

@@ -23,6 +23,7 @@ function Model() {
             );
             labelArray[j].innerText = quiz[i - 1].answers[j].answer;
           }
+          container.innerHTML = null;
           container.appendChild(questionDisplay);
         }
       },
