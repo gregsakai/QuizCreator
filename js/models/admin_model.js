@@ -168,22 +168,32 @@ function Model() {
 
   this.deleteQuestion = function(target) {
     console.log(container.childNodes.length);
-    for (let i = 0; i < container.childNodes.length; i++) {
-      if (container.childNodes[i] === target.parentNode.parentNode) {
-        $.ajax({
-          method: "GET",
-          url: "https://quizcreatorapi.herokuapp.com/quiz",
-          success: function(result) {
-            $.ajax({
-              method: "DELETE",
-              url: `https://quizcreatorapi.herokuapp.com/quiz/${result[i]._id}`,
-              success: function() {
-                container.removeChild(target.parentNode.parentNode);
-              }
-            });
-          }
-        });
+    if (container.childNodes.length > 1) {
+      for (let i = 0; i < container.childNodes.length; i++) {
+        if (container.childNodes[i] === target.parentNode.parentNode) {
+          $.ajax({
+            method: "GET",
+            url: "https://quizcreatorapi.herokuapp.com/quiz",
+            success: function(result) {
+              $.ajax({
+                method: "DELETE",
+                url: `https://quizcreatorapi.herokuapp.com/quiz/${
+                  result[i]._id
+                }`,
+                success: function() {
+                  container.removeChild(target.parentNode.parentNode);
+                }
+              });
+            }
+          });
+        }
       }
+    } else {
+      $("#centerModal").modal("show");
+      $("#exampleModalLongTitle").html("Error!");
+      $("#modal-body").html(
+        "You can not delete when you only have one question."
+      );
     }
   };
 }
