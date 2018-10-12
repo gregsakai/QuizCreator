@@ -2,11 +2,13 @@ function Model() {
   const container = document.getElementById("container");
 
   this.retrieveQuizForUser = function() {
+    container.innerHTML = null;
     $.ajax({
       method: "GET",
       url: "https://quizcreatorapi.herokuapp.com/quiz",
       success: function(result) {
         let quiz = result;
+        console.log(quiz);
         for (let i = 1; i <= quiz.length; i++) {
           let questionDisplay = document.createElement("div");
           questionDisplay.innerHTML = `<div id="questionDisplay" class="my-3">
@@ -23,7 +25,6 @@ function Model() {
             );
             labelArray[j].innerText = quiz[i - 1].answers[j].answer;
           }
-          container.innerHTML = null;
           container.appendChild(questionDisplay);
         }
       },

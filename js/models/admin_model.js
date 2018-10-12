@@ -14,6 +14,7 @@ function Model() {
   };
 
   this.retrieveQuizForAdmin = function(quiz) {
+    container.innerHTML = null;
     console.log(quiz);
 
     let num = quiz ? quiz.length : 1;
@@ -48,7 +49,6 @@ function Model() {
           radioArray[j].name = `radio${i + 1}`;
           radioArray[j].checked = quiz[i].answers[j].correct;
         }
-        container.innerHTML = null;
         container.appendChild(currentQuestion);
       }
     } else {
