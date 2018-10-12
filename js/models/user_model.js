@@ -9,6 +9,9 @@ function Model() {
       success: function(result) {
         let quiz = result;
         console.log(quiz);
+        if (quiz.length === 0) {
+          noQuiz();
+        }
         for (let i = 1; i <= quiz.length; i++) {
           let questionDisplay = document.createElement("div");
           questionDisplay.innerHTML = `<div id="questionDisplay" class="my-3">
@@ -30,12 +33,16 @@ function Model() {
       },
       error: function(error) {
         console.log(error);
-        document.write("Sorry, there is no quiz available! ");
-        let link = document.createElement("a");
-        link.innerHTML = "Click here to create one";
-        link.setAttribute("href", "admin.html");
-        document.body.appendChild(link);
+        noQuiz();
       }
     });
+
+    function noQuiz() {
+      document.write("Sorry, there is no quiz available! ");
+      let link = document.createElement("a");
+      link.innerHTML = "Click here to create one";
+      link.setAttribute("href", "admin.html");
+      document.body.appendChild(link);
+    }
   };
 }
